@@ -3,3 +3,4 @@ djangorestframework
 environs
 pandas
 plotly
+requests
