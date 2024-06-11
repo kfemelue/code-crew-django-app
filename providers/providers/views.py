@@ -22,21 +22,21 @@ class ClinicianListGet(APIView):
         if response.status_code != 200:
             return Response({'error': 'Failed to fetch data from external API'}, status=status.HTTP_502_BAD_GATEWAY)
 
-        data_json = response.json()
-        data = json.loads(data_json).results
-        print(data[0])
-
         # this dictionary will track the number of medicaid accepting clinicians in each city for data analysis
         frequency_dict = defaultdict(int)
 
         # this dictionary will map those clinicians to each city, to enable identifying the available clinicians
         location_map = defaultdict(list)
 
+        data = response.json()
+        # data = json.loads(data_json)
+        print(type(data['results']))
+
         # Iterate through the list and update the frequency dictionary
-        for item in data:
+        for item in data['results']:
             # If the ind_assgn field is "Y" then that clinician accepts medicaid
-            if item.ind_assgn == "Y":
-                key = (item.citytown, item.state)
+            if item["ind_assgn"] == "Y":
+                key = (item["citytown"], item["state"])
                 frequency_dict[key] += 1
                 location_map[key].append(item)
 
@@ -60,5 +60,4 @@ class ClinicianListGet(APIView):
 
         plot_html = fig.to_html(full_html=False, default_height=2500, default_width=2500)
 
-        return render(request, 'plot_template.html', {'plot_html': plot_html})
-
+        return render(request, 'templates/plot_template.html', {'plot_html': plot_html})
