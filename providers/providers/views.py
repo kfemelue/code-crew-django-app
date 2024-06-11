@@ -1,13 +1,12 @@
 import requests
-import json
+import plotly.express as px
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from collections import defaultdict
-import plotly.express as px
-from .models import Clinician
 from django.shortcuts import render
 from rest_framework import generics
+from .models import Clinician
 # from django.contrib.sites import requests
 
 
