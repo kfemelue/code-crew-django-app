@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from collections import defaultdict
-import plotly
+import plotly.express as px
 from .models import Clinician
 from django.shortcuts import render
 from rest_framework import generics
@@ -34,13 +34,14 @@ class ClinicianListGet(APIView):
 
         # Iterate through the list and update the frequency dictionary
         for item in data:
+            # If the ind_assgn field is "Y" then that clinician accepts medicaid
             if item.ind_assgn == "Y":
                 key = (item.citytown, item.state)
                 frequency_dict[key] += 1
                 location_map[key].append(item)
 
         frequency_dict = dict(frequency_dict)
-        objects_dict = dict(location_map)
+        clinicians_by_location_dict = dict(location_map)
 
         """
         create X and Y variables to use with plotly
@@ -50,4 +51,14 @@ class ClinicianListGet(APIView):
         """
         frequency_array = list(frequency_dict.values())
         city_state_array = [f"{key[0]}, {key[1]}" for key in frequency_dict.keys()]
+
+        fig = px.bar(x=city_state_array, y=frequency_array, labels={'x': 'City, State', 'y': 'Number of Clinicians'},
+                     title='Number of Medicaid Accepting Clinicians by City/Town')
+        fig.update_layout()
+        config = dict({'scrollZoom': True})
+        fig.show(config=config)
+
+        plot_html = fig.to_html(full_html=False, default_height=2500, default_width=2500)
+
+        return render(request, 'plot_template.html', {'plot_html': plot_html})
 
