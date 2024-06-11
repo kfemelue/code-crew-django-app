@@ -28,7 +28,7 @@ To run the app:
    ```
 7. Open a web browser, and navigate to the following url (local host port 8000):
    ```
-     http://127.0.0.1:8000/port/
+     http://127.0.0.1:8000/plot/
    ```
 
 
