@@ -18,15 +18,19 @@ To run the app:
    ```
    python3 -m venv env
    ```
-5. Install the application dependencies using the following command:
+5. Start Virtual Environment
+   ```
+   source env/bin/activate
+   ```
+6. Install the application dependencies using the following command:
    ```
    pip install -r requirements.txt
    ```
-6. Start the Django Dev Server using the manage.py file.
+7. Start the Django Dev Server by running the manage.py file.
    ```
-    python3 providers/providers/manage.py runserver 
+    python3 providers/manage.py runserver 
    ```
-7. Open a web browser, and navigate to the following url (local host port 8000):
+8. Open a web browser, and navigate to the following url (local host port 8000):
    ```
      http://127.0.0.1:8000/plot/
    ```
