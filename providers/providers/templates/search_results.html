@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="row">
+        <!-- Django template loop to render each result as a card -->
+        {% for result in results %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ result.first_name }} {{ result.middle_name }} {{ result.last_name }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ result.credential }}</h6>
+                    <p class="card-text">
+                        <strong>Specialty:</strong> {{ result.pri_spec }}<br>
+                        <strong>PECOS ID:</strong> {{ result.ind_pac_id }}<br>
+                        <strong>Facility Name:</strong> {{ result.facility_name }}<br>
+                        <strong>Telehealth:</strong> {{ result.telehealth }}<br>
+                        <strong>Phone Number:</strong> {{ result.telephone_number }}<br>
+                        <strong>Address:</strong> <br>
+                        {{ result.adr_ln_1 }}<br>
+                        {% if result.adr_ln_2 %}, {{ result.adr_ln_2 }}{% endif %},<br>
+                        {{ result.citytown }}, {{ result.state }}<br>
+                        {{ result.zip_code }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
